@@ -1,0 +1,19 @@
+[project]
+name = "tp-airflow"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "ilya32e", email = "ilyasse.mouradi@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "apache-airflow-providers-postgres==6.1.3",
+]
+
+[project.scripts]
+tp-airflow = "tp_airflow:main"
+
+[build-system]
+requires = ["uv_build>=0.13.8,<0.14.0"]
+build-backend = "uv_build"
