@@ -24,3 +24,31 @@ jobs:
 
       - name: Style (non bloquant)
         run: flake8 dags/ --max-line-length 120 --exit-zero
+
+  test-dags:
+    needs: lint
+    runs-on: ubuntu-latest
+    env:
+      AIRFLOW_VERSION: "3.4.0"
+      PYTHON_VERSION: "3.12"
+      AIRFLOW_HOME: ${{ github.workspace }}/airflow_home
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Installer Airflow, le provider Postgres et pytest
+        run: |
+          pip install "apache-airflow==${AIRFLOW_VERSION}" apache-airflow-providers-postgres pytest \
+            --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
+
+      - name: Initialiser la base Airflow
+        run: airflow db migrate
+
+      - name: Tester les DAGs
+        run: pytest tests/ -v
