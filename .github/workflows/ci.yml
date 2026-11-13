@@ -5,13 +5,22 @@ on:
   pull_request:
 
 jobs:
-  hello:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v4
 
-      - name: Dire bonjour
-        run: |
-          echo "Bonjour depuis le runner GitHub"
-          ls dags/
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer flake8
+        run: pip install flake8
+
+      - name: Erreurs bloquantes
+        run: flake8 dags/ --select E9,F63,F7,F82 --show-source
+
+      - name: Style (non bloquant)
+        run: flake8 dags/ --max-line-length 120 --exit-zero
