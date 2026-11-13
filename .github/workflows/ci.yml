@@ -1,0 +1,17 @@
+name: CI Airflow
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Dire bonjour
+        run: |
+          echo "Bonjour depuis le runner GitHub"
+          ls dags/
