@@ -4,6 +4,7 @@ import csv
 from datetime import datetime
 
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
+from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.sdk import dag, task
 from airflow.sdk.bases.sensor import PokeReturnValue
 
