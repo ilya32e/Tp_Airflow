@@ -114,3 +114,4 @@ def user_processing():
     processed >> store_user()
 
 
+user_processing()
