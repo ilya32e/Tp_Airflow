@@ -91,7 +91,7 @@ def user_processing():
     #     hook.copy_expert(sql="COPY users FROM STDIN WITH CSV HEADER", filename=CSV_PATH)
     # maintenant on passe par une table users_staging et on ignore les doublons
     @task
-    def save_user():
+    def store_user():
         hook = PostgresHook(postgres_conn_id="postgres")
         hook.run(
             "CREATE TABLE IF NOT EXISTS users_staging (LIKE users INCLUDING DEFAULTS);"
@@ -111,7 +111,7 @@ def user_processing():
     processed = process_user(user_info)
 
     create_table >> fake_user
-    processed >> save_user()
+    processed >> store_user()
 
 
 user_processing()
