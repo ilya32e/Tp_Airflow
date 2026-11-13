@@ -7,8 +7,14 @@ wheels/
 *.egg-info
 
 # Virtual environments
-.venv
+.venv/
 
 # Airflow
 logs/
 config/airflow.cfg
+
+# Secrets
+.env
+
+# Tests
+.pytest_cache/
